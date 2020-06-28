@@ -1,5 +1,5 @@
 Package: RecordLinkage
-Version: 0.4-12
+Version: 0.4-12.1
 Title: Record Linkage Functions for Linking and Deduplicating Data Sets
 Authors@R: c(person("Andreas Borg", "Developer", role = c("aut"),
                      email = "andreas.borg.public@posteo.de"), 

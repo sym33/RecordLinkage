@@ -41,6 +41,7 @@ void jarowinkler_wrapper(sqlite3_context *ctx, int n_values, sqlite3_value **val
   const unsigned char *str2 = sqlite3_value_text(value[1]);
   double result;
   result = jarowinkler_core(str1, str2, 1.0/3, 1.0/3, 1.0/3, 0.5);
+  // Be aware not to include anything else in the Debug-Mode
   #ifdef DEBUG
     Rprintf("String 1: %s\n", str1);
     Rprintf("String 2: %s\n", str2);
