@@ -1,12 +1,10 @@
 Package: RecordLinkage
 Version: 0.4-12
 Title: Record Linkage Functions for Linking and Deduplicating Data Sets
-Author: Andreas Borg and Murat Sariyar 
-Author@R: c(person("Andreas Borg", "Developer", role = c("aut"),
+Authors@R: c(person("Andreas Borg", "Developer", role = c("aut"),
                      email = "andreas.borg.public@posteo.de"), 
            person("Murat Sariyar", "Developer", role = c("aut", "cre"),
                      email = "murat.sariyar@bfh.ch"))
-Maintainer: Murat Sariyar <murat.sariyar@bfh.ch>
 Contact: murat.sariyar@bfh.ch
 Description: Provides functions for linking and deduplicating data sets.
   Methods based on a stochastic approach are implemented as well as 
