@@ -252,9 +252,12 @@ print.summaryRLBigDataLinkage <- function(x, ...)
 summary.RLResult <- function(object, ...)
   {
     val <- summary(object@data)
-    val[["nLinks"]] <- sum(chunkify(function(x) sum(x=="L"))(object@prediction))
-    val[["nNonLinks"]] <- sum(chunkify(function(x) sum(x=="N"))(object@prediction))
-    val[["nPossibleLinks"]] <- sum(chunkify(function(x) sum(x=="P"))(object@prediction))
+#    val[["nLinks"]] <- sum(chunkify(function(x) sum(x=="L"))(object@prediction))
+#    val[["nNonLinks"]] <- sum(chunkify(function(x) sum(x=="N"))(object@prediction))
+#    val[["nPossibleLinks"]] <- sum(chunkify(function(x) sum(x=="P"))(object@prediction))
+    val[["nLinks"]] <-  sum(as.ram(object@prediction)=="L", na.rm=TRUE)
+    val[["nNonLinks"]] <- sum(as.ram(object@prediction)=="N", na.rm=TRUE)
+    val[["nPossibleLinks"]] <- sum(as.ram(object@prediction)=="P", na.rm=TRUE)
     class(val) <- c("summaryRLResult", class(val))
     val
   }
@@ -365,12 +368,12 @@ setMethod(
   signature = "RecLinkResult",
   definition = function(object, ...)
   {
-    TP=length(which(object$pairs$is_match & object$prediction=="L")) # true positive
-    FP=length(which(!object$pairs$is_match & object$prediction=="L")) # false positive
-    TN=length(which(!object$pairs$is_match & object$prediction=="N")) # true negative
-    FN=length(which(object$pairs$is_match & object$prediction=="N")) # false negative
+    TP=length(which(as.ram(object@pairs$is_match) & as.ram(object$prediction)=="L")) # true positive
+    FP=length(which(!as.ram(object@pairs$is_match) & as.ram(object$prediction)=="L")) # false positive
+    TN=length(which(!as.ram(object@pairs$is_match) & as.ram(object$prediction)=="N")) # true negative
+    FN=length(which(as.ram(object@pairs$is_match) & as.ram(object$prediction)=="N")) # false negative
 
-    tab <- table(as.logical(object$pairs$is_match),object$prediction,
+    tab <- table(as.logical(as.ram(object@pairs$is_match)),as.ram(object$prediction),
             dnn=list("true status","classification"),useNA="ifany")
     # if "NA" row appears in the table (for pairs with unknown true status),
     # put it in the middle
@@ -386,7 +389,7 @@ setMethod(
   signature = "RLResult",
   definition = function(object, ...)
   {
-    tab <- table(object@data@pairs$is_match, object@prediction,
+    tab <- table(as.ram(object@data@pairs$is_match), as.ram(object@prediction),
       useNA = "ifany")
     names(dimnames(tab)) <- c("true status", "classification")
     dimnames(tab)[dimnames(tab)=="1"] <- "TRUE"
